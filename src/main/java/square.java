@@ -7,13 +7,12 @@ public class square {
     Bomb, None;
   }
 
-  private data status;
+  private data status = data.None;
   private int surroundBombCount;
   private boolean openFlg = false;
   private List<String> surroundNoneSquare = new ArrayList<String>();
 
-  public square(data status) {
-    // TODO Auto-generated constructor stub
+  public void setStatus(data status) {
     this.status = status;
   }
 
@@ -50,5 +49,9 @@ public class square {
 
   public void setSurroundNoneSquare(String surroundNoneSquare) {
     this.surroundNoneSquare.add(surroundNoneSquare);
+  }
+
+  public int getSurroundBombCount() {
+    return surroundBombCount;
   }
 }

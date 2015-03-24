@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -22,13 +21,12 @@ public class gameBoard {
     for (int i = 0; i < gameBorad.length; i++) {
       // 横の列
       for (int j = 0; j < gameBorad.length; j++) {
-        if (xlist.iterator().next() == i || ylist.iterator().next() == j) {
-          gameBorad[i][j] = new square(square.data.Bomb);
-          // System.out.println("ボムの位置" + ": x=" + i + "" + ": y=" + j);
-          continue;
-        }
-        gameBorad[i][j] = new square(square.data.None);
+        gameBorad[i][j] = new square();
       }
+    }
+    for (int i = 0; i < xlist.size(); i++) {
+      gameBorad[xlist.get(i)][ylist.get(i)].setStatus(square.data.Bomb);
+      System.out.println("セットしました" + xlist.get(i) + ":" + ylist.get(i));
     }
   }
 
@@ -39,23 +37,27 @@ public class gameBoard {
     if (checkResult) {
       return false;
     }
-
-    List<String> surroundNoneList = gameBorad[x][y].getSurroundNoneSquare();
-    for (int i = 0; i < surroundNoneList.size(); i++) {
-      String[] xy = StringUtils.split(surroundNoneList.get(i), ",");
-      int surroundX = Integer.parseInt(xy[0]);
-      int surroundY = Integer.parseInt(xy[1]);
-      gameBorad[surroundX][surroundY].setSurroundBombCount(checksurround(
-          surroundX, surroundY));
-      // 周囲のnotボム処理
-      if (!gameBorad[surroundX][surroundY].getOpenFlg()
-          && !gameBorad[surroundX][surroundY].checkBomb()) {
-        for (int j = 0; j < gameBorad[surroundX][surroundY]
-            .getSurroundNoneSquare().size(); j++) {
-          surroundNoneList.add(gameBorad[surroundX][surroundY]
-              .getSurroundNoneSquare().get(j));
+    if (gameBorad[x][y].getSurroundBombCount() == 0) {
+      List<String> surroundNoneList = gameBorad[x][y].getSurroundNoneSquare();
+      for (int i = 0; i < surroundNoneList.size(); i++) {
+        String[] xy = StringUtils.split(surroundNoneList.get(i), ",");
+        int surroundX = Integer.parseInt(xy[0]);
+        int surroundY = Integer.parseInt(xy[1]);
+        gameBorad[surroundX][surroundY].setSurroundBombCount(checksurround(
+            surroundX, surroundY));
+        // 周囲のnotボム処理
+        if (!gameBorad[surroundX][surroundY].getOpenFlg()
+            && !gameBorad[surroundX][surroundY].checkBomb()) {
+          for (int j = 0; j < gameBorad[surroundX][surroundY]
+              .getSurroundNoneSquare().size(); j++) {
+            if (gameBorad[surroundX][surroundY].getSurroundBombCount() == 0) {
+              surroundNoneList.add(gameBorad[surroundX][surroundY]
+                  .getSurroundNoneSquare().get(j));
+            }
+          }
         }
       }
+
     }
     return true;
   }
@@ -149,11 +151,9 @@ public class gameBoard {
 
   private ArrayList<Integer> notOverlapRun(int n) {
     ArrayList<Integer> xlist = new ArrayList<Integer>();
-    for (int i = 0; i <= n; i++) {
+    for (int i = 0; i < n; i++) {
       xlist.add(i);
     }
-    // 乱数生成
-    Collections.shuffle(xlist);
     return xlist;
   }
 
@@ -163,8 +163,11 @@ public class gameBoard {
     // Randomクラスのインスタンス化
     Random rnd = new Random();
 
-    for (int i = 0; i <= n; i++) {
-      yList.add(rnd.nextInt(n + 1));
+    for (int i = 0; i < n; i++) {
+      yList.add(rnd.nextInt(n));
+    }
+    for (int i : yList) {
+      System.out.println(yList.get(i));
     }
     return yList;
 
