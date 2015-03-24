@@ -24,7 +24,7 @@ public class gameController {
         int y = Integer.parseInt(inline[1]);
 
         System.out.println("input: '" + line + "'");
-        boolean gameResult = board.checkBomb(x, y);
+        boolean gameResult = board.turnOver(x, y);
         if (!gameResult) {
           System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
           System.out.println("xxxxxxxxxxxx   GameOver   xxxxxxxxxxxx");

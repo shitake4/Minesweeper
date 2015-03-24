@@ -1,4 +1,5 @@
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class square {
 
@@ -7,8 +8,9 @@ public class square {
   }
 
   private data status;
-  private int surround;
+  private int surroundBombCount;
   private boolean openFlg = false;
+  private List<String> surroundNoneSquare = new ArrayList<String>();
 
   public square(data status) {
     // TODO Auto-generated constructor stub
@@ -17,7 +19,7 @@ public class square {
 
   public String display() {
     if (openFlg) {
-      return Integer.toString(surround);
+      return Integer.toString(surroundBombCount);
     }
     return "*";
   }
@@ -26,12 +28,27 @@ public class square {
     return status;
   }
 
-  public boolean turnOver(int surround) {
+  public boolean getOpenFlg() {
+    return this.openFlg;
+  }
+
+  public void setSurroundBombCount(int surround) {
+    this.surroundBombCount = surround;
+  }
+
+  public boolean checkBomb() {
     if (status.equals(data.Bomb)) {
-      return false;
+      return true;
     }
-    this.surround = surround;
     this.openFlg = true;
-    return true;
+    return false;
+  }
+
+  public List<String> getSurroundNoneSquare() {
+    return surroundNoneSquare;
+  }
+
+  public void setSurroundNoneSquare(String surroundNoneSquare) {
+    this.surroundNoneSquare.add(surroundNoneSquare);
   }
 }
