@@ -3,12 +3,12 @@ import java.io.InputStreamReader;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class gameController {
+public class GameController {
 
   public static void main(String[] args) {
     try {
       System.out.println("ゲームを開始します");
-      gameBoard board = new gameBoard(10);
+      GameBoard board = new GameBoard(10);
       board.display();
 
       BufferedReader stdReader = new BufferedReader(new InputStreamReader(

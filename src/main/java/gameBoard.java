@@ -4,14 +4,14 @@ import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class gameBoard {
+public class GameBoard {
 
-  private square gameBorad[][];
+  private Square gameBorad[][];
   private int maxSize;
 
-  public gameBoard(int n) {
+  public GameBoard(int n) {
     // TODO Auto-generated constructor stub
-    this.gameBorad = new square[n][n];
+    this.gameBorad = new Square[n][n];
     this.maxSize = n - 1;
 
     ArrayList<Integer> xlist = notOverlapRun(n);
@@ -21,11 +21,11 @@ public class gameBoard {
     for (int i = 0; i < gameBorad.length; i++) {
       // 横の列
       for (int j = 0; j < gameBorad.length; j++) {
-        gameBorad[i][j] = new square();
+        gameBorad[i][j] = new Square();
       }
     }
     for (int i = 0; i < xlist.size(); i++) {
-      gameBorad[xlist.get(i)][ylist.get(i)].setStatus(square.data.Bomb);
+      gameBorad[xlist.get(i)][ylist.get(i)].setStatus(Square.data.Bomb);
       System.out.println("セットしました" + xlist.get(i) + ":" + ylist.get(i));
     }
   }
@@ -37,6 +37,7 @@ public class gameBoard {
     if (checkResult) {
       return false;
     }
+
     if (gameBorad[x][y].getSurroundBombCount() == 0) {
       List<String> surroundNoneList = gameBorad[x][y].getSurroundNoneSquare();
       for (int i = 0; i < surroundNoneList.size(); i++) {
@@ -57,7 +58,6 @@ public class gameBoard {
           }
         }
       }
-
     }
     return true;
   }
@@ -86,21 +86,21 @@ public class gameBoard {
 
     // 左列
     if (yMinus1 >= 0 && xMinus1 >= 0
-        && gameBorad[xMinus1][yMinus1].getStatus().equals(square.data.Bomb)) {
+        && gameBorad[xMinus1][yMinus1].getStatus().equals(Square.data.Bomb)) {
       count++;
     } else if (yMinus1 >= 0 && xMinus1 >= 0) {
       String surroundNoneSquare = xMinus1 + "," + yMinus1;
       gameBorad[x][y].setSurroundNoneSquare(surroundNoneSquare);
     }
     if (xMinus1 >= 0
-        && gameBorad[xMinus1][y].getStatus().equals(square.data.Bomb)) {
+        && gameBorad[xMinus1][y].getStatus().equals(Square.data.Bomb)) {
       count++;
     } else if (xMinus1 >= 0) {
       String surroundNoneSquare = xMinus1 + "," + y;
       gameBorad[x][y].setSurroundNoneSquare(surroundNoneSquare);
     }
     if (xMinus1 >= 0 && yPlus1 <= maxSize
-        && gameBorad[xMinus1][yPlus1].getStatus().equals(square.data.Bomb)) {
+        && gameBorad[xMinus1][yPlus1].getStatus().equals(Square.data.Bomb)) {
       count++;
     } else if (xMinus1 >= 0 && yPlus1 <= maxSize) {
       String surroundNoneSquare = xMinus1 + "," + yPlus1;
@@ -109,14 +109,14 @@ public class gameBoard {
 
     // 中心列
     if (yMinus1 >= 0
-        && gameBorad[x][yMinus1].getStatus().equals(square.data.Bomb)) {
+        && gameBorad[x][yMinus1].getStatus().equals(Square.data.Bomb)) {
       count++;
     } else if (yMinus1 >= 0) {
       String surroundNoneSquare = x + "," + yMinus1;
       gameBorad[x][y].setSurroundNoneSquare(surroundNoneSquare);
     }
     if (yPlus1 <= maxSize
-        && gameBorad[x][yPlus1].getStatus().equals(square.data.Bomb)) {
+        && gameBorad[x][yPlus1].getStatus().equals(Square.data.Bomb)) {
       count++;
     } else if (yPlus1 <= maxSize) {
       String surroundNoneSquare = x + "," + yPlus1;
@@ -125,28 +125,27 @@ public class gameBoard {
 
     // 右列
     if (xPlus1 <= maxSize && yMinus1 >= 0
-        && gameBorad[xPlus1][yMinus1].getStatus().equals(square.data.Bomb)) {
+        && gameBorad[xPlus1][yMinus1].getStatus().equals(Square.data.Bomb)) {
       count++;
     } else if (xPlus1 <= maxSize && yMinus1 >= 0) {
       String surroundNoneSquare = xPlus1 + "," + yMinus1;
       gameBorad[x][y].setSurroundNoneSquare(surroundNoneSquare);
     }
     if (xPlus1 <= maxSize
-        && gameBorad[xPlus1][y].getStatus().equals(square.data.Bomb)) {
+        && gameBorad[xPlus1][y].getStatus().equals(Square.data.Bomb)) {
       count++;
     } else if (xPlus1 <= maxSize) {
       String surroundNoneSquare = xPlus1 + "," + y;
       gameBorad[x][y].setSurroundNoneSquare(surroundNoneSquare);
     }
     if (yPlus1 <= maxSize && xPlus1 <= maxSize
-        && gameBorad[xPlus1][yPlus1].getStatus().equals(square.data.Bomb)) {
+        && gameBorad[xPlus1][yPlus1].getStatus().equals(Square.data.Bomb)) {
       count++;
     } else if (yPlus1 <= maxSize && xPlus1 <= maxSize) {
       String surroundNoneSquare = xPlus1 + "," + yPlus1;
       gameBorad[x][y].setSurroundNoneSquare(surroundNoneSquare);
     }
     return count;
-
   }
 
   private ArrayList<Integer> notOverlapRun(int n) {

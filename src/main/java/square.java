@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class square {
+public class Square {
 
   public static enum data {
     Bomb, None;
